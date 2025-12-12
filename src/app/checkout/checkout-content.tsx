@@ -158,9 +158,9 @@ export default function CheckoutContent() {
 
     const message = messageLines.join("\n");
     const encodedMessage = encodeURIComponent(message);
-    // Use the correct business WhatsApp number instead of message ID
-    const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_BUSINESS_PHONE || '+2347010326015';
-    const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodedMessage}`;
+    // Use the WhatsApp Business API URL for quote requests
+    const whatsappApiUrl = process.env.NEXT_PUBLIC_WHATSAPP_BUSINESS_URL || 'https://api.whatsapp.com/message/TOVLTP6EMAWNI1';
+    const whatsappUrl = `${whatsappApiUrl}?text=${encodedMessage}`;
 
     // Open WhatsApp with responsive handling
     if (typeof window !== 'undefined') {
