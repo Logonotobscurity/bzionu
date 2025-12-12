@@ -1,81 +1,61 @@
-import axios, { AxiosInstance } from 'axios';
+/**
+ * WhatsApp Direct Integration
+ * Uses WhatsApp Business API via direct URLs (wa.me)
+ * No server-side WAHA dependency required
+ */
 
-export class WAHAClient {
-  private client: AxiosInstance;
-  private sessionName: string;
+export class WhatsAppClient {
+  private businessPhone: string;
 
   constructor() {
-    const headers: Record<string, string> = {};
-    if (process.env.WAHA_API_KEY) {
-      headers['X-Api-Key'] = process.env.WAHA_API_KEY;
-    }
-
-    // Determine baseURL with proper fallback for Netlify build environment
-    // During build, use Netlify's deployment URL if available
-    // For local development, default to localhost
-    let baseURL = process.env.WAHA_URL;
-    
-    if (!baseURL) {
-      if (process.env.NETLIFY && process.env.URL) {
-        // On Netlify deploy preview or production
-        baseURL = `https://${process.env.URL}`;
-      } else {
-        // Local development default
-        baseURL = 'http://localhost:3000';
-      }
-    }
-
-    this.client = axios.create({
-      baseURL,
-      headers,
-      timeout: 10000,
-    });
-    this.sessionName = process.env.WAHA_SESSION || 'default';
+    // Business phone number for WhatsApp messages
+    this.businessPhone = process.env.WHATSAPP_BUSINESS_NUMBER || '';
   }
 
-  async sendText(to: string, text: string) {
-    try {
-      const response = await this.client.post('/api/sendText', {
-        session: this.sessionName,
-        chatId: this.formatPhone(to),
-        text,
-      });
-      return response.data;
-    } catch (error) {
-      console.error('WAHA sendText error:', error);
-      throw error;
-    }
+  /**
+   * Generate a WhatsApp message URL for direct messaging
+   * Works on both mobile and desktop
+   */
+  generateMessageUrl(phoneNumber: string, message: string): string {
+    const encodedMessage = encodeURIComponent(message);
+    const formattedPhone = this.formatPhoneNumber(phoneNumber);
+    return `https://wa.me/${formattedPhone}?text=${encodedMessage}`;
   }
 
-  async sendImage(to: string, imageUrl: string, caption?: string) {
-    try {
-      const response = await this.client.post('/api/sendImage', {
-        session: this.sessionName,
-        chatId: this.formatPhone(to),
-        file: { url: imageUrl },
-        caption,
-      });
-      return response.data;
-    } catch (error) {
-      console.error('WAHA sendImage error:', error);
-      throw error;
-    }
-  }
-
-  async getSessionStatus() {
-    try {
-      const response = await this.client.get(`/api/sessions/${this.sessionName}`);
-      return response.data;
-    } catch (error) {
-      console.error('WAHA getSessionStatus error:', error);
-      throw error;
-    }
-  }
-
-  private formatPhone(phone: string): string {
+  /**
+   * Format phone number for WhatsApp (remove + and special characters)
+   */
+  private formatPhoneNumber(phone: string): string {
+    // Remove all non-digit characters
     const cleaned = phone.replace(/\D/g, '');
-    return `${cleaned}@c.us`;
+    // Ensure it has country code (should be 10+ digits)
+    return cleaned.length >= 10 ? cleaned : '';
+  }
+
+  /**
+   * Send text via WhatsApp (returns URL for user to open)
+   */
+  async sendText(to: string, text: string): Promise<{ url: string; message: string }> {
+    const url = this.generateMessageUrl(to, text);
+    return { url, message: text };
+  }
+
+  /**
+   * Send image via WhatsApp (returns URL for user to open)
+   */
+  async sendImage(to: string, imageUrl: string, caption?: string): Promise<{ url: string }> {
+    const message = caption ? `${caption}\n\n${imageUrl}` : imageUrl;
+    const url = this.generateMessageUrl(to, message);
+    return { url };
+  }
+
+  /**
+   * Check connection status (always available with direct URLs)
+   */
+  async getSessionStatus(): Promise<{ status: 'WORKING' | 'UNAVAILABLE' }> {
+    return { status: 'WORKING' };
   }
 }
 
-export const wahaClient = new WAHAClient();
+export const whatsappClient = new WhatsAppClient();
+
