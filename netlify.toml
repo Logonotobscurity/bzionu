@@ -8,6 +8,11 @@
   NODE_ENV = "production"
   NPM_FLAGS = "--include=dev"
 
+[dev]
+  command = "npm run dev"
+  targetPort = 3000
+  port = 8888
+
 # Redirect to custom domain if needed
 [[redirects]]
   from = "/*"
