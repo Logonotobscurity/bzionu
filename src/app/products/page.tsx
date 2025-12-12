@@ -1,10 +1,8 @@
-
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from '@/components/ui/section';
 import { CTASection } from '@/components/cta-section';
 import { FmcgBanner } from '@/components/products/FmcgBanner';
 import { SpicesBanner } from '@/components/products/SpicesBanner';
-import { TraceabilitySection } from '@/components/traceability-section';
 import ProductsView from "@/components/products-view";
 import  {FeaturedBulkPackages}  from "@/components/featured-bulk-packages";
 
@@ -22,7 +20,7 @@ const ProductsPage = async () => {
 
       <FeaturedBulkPackages />
 
-      <TraceabilitySection />
+      
 
       <FmcgBanner />
 

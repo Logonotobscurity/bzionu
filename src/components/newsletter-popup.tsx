@@ -99,7 +99,7 @@ export const NewsletterPopup = ({ delay = 10000 }: NewsletterPopupProps) => {
               {/* Featured Image */}
               <div className="mb-5 rounded-xl overflow-hidden shadow-md bg-gradient-to-br from-primary/5 to-secondary/5">
                 <Image
-                  src="https://i.ibb.co/zYxQkP9/products.jpg"
+                  src="https://i.ibb.co/k2NHwMPJ/newsletterbanner.png"
                   alt="BZION Products"
                   width={400}
                   height={200}

@@ -2,7 +2,7 @@
 import { ArrowRight, Check } from 'lucide-react';
 
 const FeaturedContent = () => {
-  const imgSrc = "https://i.ibb.co/7bJd7x7/traceability-map.png";
+  const imgSrc = "https://i.ibb.co/3YvL6sMH/Gemini-Generated-Image-k4njh5k4njh5k4nj.png";
   const fallbackSrc = "https://placehold.co/600x450/EEE/31343C?text=Image+Not+Found";
 
   return (
@@ -29,13 +29,13 @@ const FeaturedContent = () => {
             </div>
             <span className="text-[15px] font-medium text-[#555555] leading-relaxed">End-to-end product tracking</span>
           </li>
-          <li className="flex items-start gap-3">
+          <li className="flex flex-start gap-3">
             <div className="flex-shrink-0 w-5 h-5 rounded-full bg-[#FFD700] text-[#001F3F] flex items-center justify-center">
               <Check size={14} />
             </div>
             <span className="text-[15px] font-medium text-[#555555] leading-relaxed">Verified sourcing from trusted partners</span>
           </li>
-          <li className="flex items-start gap-3">
+          <li className="flex flex-start gap-3">
             <div className="flex-shrink-0 w-5 h-5 rounded-full bg-[#FFD700] text-[#001F3F] flex items-center justify-center">
               <Check size={14} />
             </div>

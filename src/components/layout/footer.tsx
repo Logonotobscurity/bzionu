@@ -4,6 +4,7 @@ import { FOOTER_LINKS } from '@/lib/config/constants';
 import { FooterMobileAccordion } from './footer-mobile-accordion';
 import { FooterNewsletter } from './footer-newsletter';
 import { Section } from '../ui/section';
+import FooterLogo from './footer-logo'; // Changed from named import to default import
 
 export const Footer = () => {
   const linkCategories = {
@@ -28,7 +29,7 @@ export const Footer = () => {
                 
                 {/* Logo and Description */}
                 <div className="col-span-1 md:col-span-4 lg:col-span-3">
-                  <Logo className="h-10 w-auto mb-6" />
+                  <FooterLogo className="h-10 w-auto mb-6" /> {/* Replaced Logo with FooterLogo */}
                   <p className="text-sm text-slate-200 font-light leading-relaxed">
                     Your trusted supply partner for authentic food products in Nigeria. We are committed to reliability, price stability, and operational excellence.
                   </p>
