@@ -78,6 +78,10 @@ export default function BrandPage() {
           text: 'Browse Products',
           href: `#products`,
         }}
+        secondaryCta={{
+            text: 'Browse All Products',
+            href: '/products',
+        }}
       />
 
       {/* Products Section */}

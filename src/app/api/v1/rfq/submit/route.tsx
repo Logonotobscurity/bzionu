@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createQuote } from '@/services/quoteService';
 import { sendEmail } from '@/lib/api/email';
-import { whatsappService } from '@/services/whatsappService';
+import { sendQuoteRequestToWhatsApp } from '@/lib/api/whatsapp';
 import RfqSubmissionEmail from '@/components/emails/rfq-submission-email';
 import { checkRateLimit } from '@/lib/ratelimit';
 
@@ -74,29 +74,31 @@ export async function POST(request: Request) {
       console.error('Failed to send confirmation email:', emailError);
     }
 
-    // Send WhatsApp notifications (non-blocking)
-    Promise.all([
-      whatsappService.sendQuoteNotification({
-        customerName: validated.fullName,
-        customerPhone: validated.phone,
-        quoteReference: quote.reference,
-        items: validated.items.map(item => ({
-          name: item.name,
-          quantity: item.quantity,
-        })),
-        totalItems: validated.items.reduce((sum, i) => sum + i.quantity, 0),
-      }),
-      whatsappService.sendCustomerConfirmation(
-        validated.phone,
-        validated.fullName,
-        quote.reference
-      ),
-    ]).catch(err => console.error('WhatsApp notification failed:', err));
+    // Send WhatsApp notification
+    const whatsappData = {
+      name: validated.fullName,
+      email: validated.email,
+      phone: validated.phone,
+      company: validated.company,
+      address: validated.address,
+      items: validated.items.map(item => ({
+        id: item.id,
+        name: item.name,
+        quantity: item.quantity,
+      })),
+    };
+
+    const { success: whatsappSuccess, whatsappUrl, error: whatsappError } = await sendQuoteRequestToWhatsApp(whatsappData);
+
+    if (whatsappError) {
+      console.error('WhatsApp notification failed:', whatsappError);
+    }
 
     return NextResponse.json({
       success: true,
       message: 'RFQ submitted successfully.',
       quoteReference: quote.reference,
+      whatsappUrl: whatsappSuccess ? whatsappUrl : null,
     }, { status: 201 });
 
   } catch (error) {

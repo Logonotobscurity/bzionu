@@ -71,6 +71,10 @@ export default function CategoryPage() {
                     text: 'View Products',
                     href: '#products',
                 }}
+                secondaryCta={{
+                    text: 'Browse All Products',
+                    href: '/products',
+                }}
             />
 
             <Section className="py-16 bg-white" id="products">

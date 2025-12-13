@@ -30,10 +30,10 @@
     "id": 3,
     "name": "Crown Flour Mills",
     "slug": "crown-flour-mills",
-    "brandCount": 2,
+    "brandCount": 1,
     "productCount": 2,
     "categories": ["Baking & Confectionery", "Pasta, Rice & Grains"],
-    "description": "A subsidiary of Olam, Crown Flour Mills is a top producer of wheat-based products including Mamagold and Mama's Pride.",
+    "description": "A subsidiary of Olam, Crown Flour Mills is a top producer of wheat-based products including Mamagold.",
     "logo": "https://i.ibb.co/zhkPMqhT/crown-flour-mill.png",
     "isActive": true,
     "positioningStatement": "Olam subsidiary specializing in wheat-based baking products",
@@ -92,19 +92,6 @@
     "buyerSegments": ["Retail", "Foodservice"]
   },
   {
-    "id": 11,
-    "name": "PZ Cussons",
-    "slug": "pz-cussons",
-    "brandCount": 2,
-    "productCount": 4,
-    "categories": ["Cooking Oils & Fats", "Seasonings & Flavor Enhancers"],
-    "description": "PZ Cussons Nigeria Plc is a leading manufacturer of personal and home care products, including Kings and Mamador cooking oils.",
-    "logo": "https://i.ibb.co/jPyVKWMt/PZ-Cussons-Logo-wine.png",
-    "isActive": true,
-    "positioningStatement": "Leading manufacturer of personal and home care products, with a food division for cooking oils.",
-    "buyerSegments": ["Retail", "Wholesale"]
-  },
-  {
     "id": 9,
     "name": "Sonia Foods",
     "slug": "sonia-foods",
@@ -131,19 +118,6 @@
     "buyerSegments": ["Export", "Wholesale", "Retail"]
   },
   {
-    "id": 22,
-    "name": "Honeywell Flour Mills",
-    "slug": "honeywell-flour-mills",
-    "brandCount": 1,
-    "productCount": 5,
-    "categories": ["Pasta, Rice & Grains"],
-    "description": "Honeywell Flour Mills is a leading producer of high-quality flour, pasta, and grains in Nigeria.",
-    "logo": "https://i.ibb.co/xSyMM4Nx/Honeywell-Flour-Mills-logo.jpg",
-    "isActive": true,
-    "positioningStatement": "A leading producer of high-quality flour, pasta, and grains in Nigeria.",
-    "buyerSegments": ["Retail", "Baking", "Wholesale"]
-  },
-  {
     "id": 23,
     "name": "Flour Mills of Nigeria",
     "slug": "flour-mills-of-nigeria",
@@ -168,31 +142,5 @@
     "isActive": true,
     "positioningStatement": "Manufacturer of fruit juices, drinks, and sauces.",
     "buyerSegments": ["Retail", "Foodservice"]
-  },
-  {
-    "id": 25,
-    "name": "Arla",
-    "slug": "arla",
-    "brandCount": 1,
-    "productCount": 2,
-    "categories": ["Dairy"],
-    "description": "Arla is a global dairy company that produces high-quality milk and dairy products, known for the Dano brand in Nigeria.",
-    "logo": "https://i.ibb.co/KpVVg9jJ/arla-logo.png",
-    "isActive": true,
-    "positioningStatement": "A global dairy company that produces high-quality milk and dairy products.",
-    "buyerSegments": ["Retail", "Foodservice"]
-  },
-  {
-    "id": 26,
-    "name": "Dufil Prima Foods",
-    "slug": "dufil-prima-foods",
-    "brandCount": 1,
-    "productCount": 1,
-    "categories": ["Pasta, Rice & Grains"],
-    "description": "Dufil Prima Foods is a leading food manufacturing company in Nigeria, known for instant noodles and food products including the Mimee brand.",
-    "logo": "https://i.ibb.co/XxDbmwyL/dufil-logo.png",
-    "isActive": true,
-    "positioningStatement": "A leading food manufacturing company in Nigeria, known for instant noodles.",
-    "buyerSegments": ["Retail", "Wholesale"]
   }
 ]

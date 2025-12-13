@@ -17,13 +17,15 @@ interface QuoteRequestMessage {
   }>;
 }
 
+// Use the specific BZION WhatsApp Business URL provided by the user
+const WHATSAPP_BUSINESS_URL = 'https://api.whatsapp.com/message/TOVLTP6EMAWNI1';
+
 /**
  * Generates a WhatsApp message URL for quote requests
  * Use this to create a link that opens WhatsApp with pre-filled message
  */
 export function generateQuoteRequestWhatsAppURL(
-  data: QuoteRequestMessage,
-  businessPhone: string = process.env.NEXT_PUBLIC_WHATSAPP_BUSINESS_PHONE || ''
+  data: QuoteRequestMessage
 ): string {
   // Format product list
   const productList = data.items
@@ -53,11 +55,8 @@ Please respond to this customer within 24 hours.
   // Encode message for URL
   const encodedMessage = encodeURIComponent(message);
 
-  // Remove non-digits from phone number
-  const cleanPhone = businessPhone.replace(/\D/g, '');
-
   // Return WhatsApp URL
-  return `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
+  return `${WHATSAPP_BUSINESS_URL}?text=${encodedMessage}`;
 }
 
 /**
@@ -101,12 +100,10 @@ export function openWhatsAppChat(url: string): void {
  * @returns WhatsApp URL for opening chat
  */
 export async function sendQuoteRequestToWhatsApp(
-  data: QuoteRequestMessage,
-  businessPhone?: string
+  data: QuoteRequestMessage
 ): Promise<{ success: boolean; whatsappUrl?: string; error?: string }> {
   try {
-    // Use the specific BZION WhatsApp Business URL
-    const whatsappUrl = generateQuoteRequestWhatsAppURL(data, businessPhone);
+    const whatsappUrl = generateQuoteRequestWhatsAppURL(data);
     return {
       success: true,
       whatsappUrl,
