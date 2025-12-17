@@ -34,7 +34,7 @@ export const getInfoSections = () => [
         imageHint: 'warehouse shelves'
       },
       {
-        imageUrl: 'https://i.ibb.co/zh8DKv5F/b.png',
+        imageUrl: 'https://i.ibb.co/tkYT2sH/Gemini-Generated-Image-8ud7z58ud7z58ud7.png',
         description: 'Factory production line',
         imageHint: 'factory line'
       },
@@ -83,7 +83,7 @@ export const getInfoSections = () => [
     },
     images: [
       {
-        imageUrl: 'https://i.ibb.co/DPsSch0s/Gemini-Generated-Image-11msrf11msrf11ms.png',
+        imageUrl: 'https://i.ibb.co/tkYT2sH/Gemini-Generated-Image-8ud7z58ud7z58ud7.png',
         description: 'A handshake between business partners',
         imageHint: 'business handshake'
       },

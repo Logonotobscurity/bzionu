@@ -34,7 +34,7 @@ export default async function Home() {
 
   const carouselSlides = [
     {
-      image: getPlaceholderImage('hero'),
+      image: 'https://i.ibb.co/7txX6Xm6/Gemini-Generated-Image-errnwoerrnwoerrn.png',
       title: "Your Trusted Partner in Nigeria’s Food Supply Chain",
       description: "We work with businesses to ensure steady access to authentic and high quality food products, supported by reliability, price stability, and transparency at every stage.",
       cta: "Shop Now",
