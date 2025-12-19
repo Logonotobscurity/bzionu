@@ -1,0 +1,36 @@
+[
+  {
+    "reference": "Q-2024-001",
+    "buyerContactEmail": "customer1@example.com",
+    "buyerContactPhone": "555-1234",
+    "status": "draft",
+    "lines": [
+      {
+        "productSku": "SKU001",
+        "productName": "Product 1",
+        "qty": 2,
+        "unitPrice": 10.50
+      },
+      {
+        "productSku": "SKU002",
+        "productName": "Product 2",
+        "qty": 1,
+        "unitPrice": 25.00
+      }
+    ]
+  },
+  {
+    "reference": "Q-2024-002",
+    "buyerContactEmail": "customer2@example.com",
+    "buyerContactPhone": "555-5678",
+    "status": "sent",
+    "lines": [
+      {
+        "productSku": "SKU003",
+        "productName": "Product 3",
+        "qty": 5,
+        "unitPrice": 5.75
+      }
+    ]
+  }
+]

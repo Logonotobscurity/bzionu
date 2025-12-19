@@ -1,0 +1,24 @@
+[
+  {
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "company": "Doe Industries",
+    "role": "customer"
+  },
+  {
+    "name": "Jane Smith",
+    "email": "jane.smith@example.com",
+    "company": "Smith & Co.",
+    "role": "customer"
+  },
+  {
+    "name": "Test User",
+    "email": "test@example.com",
+    "role": "customer"
+  },
+  {
+    "name": "Bola A",
+    "email": "bola@bzion.shop",
+    "role": "admin"
+  }
+]

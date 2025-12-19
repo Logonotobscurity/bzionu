@@ -12,6 +12,7 @@ import WhatsappWidget from "@/components/layout/WhatsappWidget";
 import { MonitoringProvider } from "@/components/layout/MonitoringProvider";
 import { PageLoadingProvider } from "@/components/layout/PageLoadingProvider";
 import NewsletterPopup from "@/components/newsletter-popup";
+import Providers from "@/components/providers";
 
 export const metadata: Metadata = {
   title: "BZION Hub Digital",
@@ -44,6 +45,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased flex flex-col min-h-screen overflow-x-hidden bg-white">
+        <Providers>
           <PageLoadingProvider>
             <MonitoringProvider />
             <ErrorBoundary>
@@ -57,6 +59,7 @@ export default function RootLayout({
               <NewsletterPopup delay={10000} />
             </ErrorBoundary>
           </PageLoadingProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -86,8 +86,22 @@ model Product {
   views               ProductView[]     // Relation to ProductView
   favoritedBy         UserFavorite[]    // Relation to UserFavorite
 
+  stock               Int               @default(0)
+  stockMovements      StockMovement[]
+
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @default(now()) @updatedAt
+}
+
+model StockMovement {
+  id          Int      @id @default(autoincrement())
+  productId   Int
+  quantity    Int
+  type        String // e.g., "initial", "sale", "return", "adjustment"
+  notes       String?
+  createdAt   DateTime @default(now())
+
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model ProductImage {
@@ -122,6 +136,7 @@ model ProductCategory {
 model User {
   id               Int       @id @default(autoincrement())
   email            String    @unique
+  password         String?
   firstName        String?   @map("first_name")
   lastName         String?   @map("last_name")
   phone            String?   @unique

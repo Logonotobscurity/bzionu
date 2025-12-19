@@ -1,28 +1,12 @@
 'use client';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { toast } from "@/hooks/use-toast";
+
 import { Section, SectionHeading, SectionTitle, SectionDescription } from "@/components/ui/section";
 import { Mail, Phone, MapPin } from 'lucide-react';
 import Image from "next/image";
 import Link from "next/link";
 import { findImage } from "@/lib/placeholder-images";
-
-const contactFormSchema = z.object({
-  firstName: z.string().min(1, "First name is required."),
-  lastName: z.string().min(1, "Last name is required."),
-  email: z.string().email("Invalid email address."),
-  phone: z.string().optional(),
-  subject: z.string().min(1, "Subject is required."),
-  message: z.string().min(10, "Message must be at least 10 characters."),
-});
-
-type ContactFormValues = z.infer<typeof contactFormSchema>;
+import { ContactForm } from "@/components/forms/contact-form"; // Import the new contact form
+import { Button } from "@/components/ui/button";
 
 const PageHero = () => {
     return (
@@ -49,28 +33,7 @@ const PageHero = () => {
     );
 }
 
-const ContactForm = () => {
-    const form = useForm<ContactFormValues>({
-        resolver: zodResolver(contactFormSchema),
-        defaultValues: {
-            firstName: "",
-            lastName: "",
-            email: "",
-            phone: "",
-            subject: "",
-            message: "",
-        }
-    });
-
-    const onSubmit = (data: ContactFormValues) => {
-        console.log('Contact form submitted:', data);
-        toast({
-            title: "Message Sent!",
-            description: "Thanks for reaching out. We'll get back to you shortly.",
-        });
-        form.reset();
-    }
-
+const ContactFormSection = () => {
     return (
         <Section className="bg-gradient-to-b from-secondary/5 to-background">
             <div className="max-w-2xl mx-auto">
@@ -79,104 +42,13 @@ const ContactForm = () => {
                     <SectionDescription>Fill out the form below and we'll get back to you as soon as possible.</SectionDescription>
                 </SectionHeading>
                 
-                <Form {...form}>
-                    <div className="relative mt-8 p-8 md:p-12 rounded-3xl bg-gradient-to-br from-white via-slate-50 to-white border border-slate-200/50 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
-                        {/* Modern gradient accent */}
-                        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-secondary/5 to-transparent rounded-full -mr-48 -mt-48 pointer-events-none"></div>
-                        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-primary/5 to-transparent rounded-full -ml-40 -mb-40 pointer-events-none"></div>
-                        
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 relative z-10">
-                        <div className="grid sm:grid-cols-2 gap-6">
-                            <FormField
-                                control={form.control}
-                                name="firstName"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className="text-sm font-semibold text-slate-700">First Name</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="John" className="h-11 bg-slate-50 border-slate-200 focus:bg-white focus:border-secondary focus:ring-secondary/20 rounded-lg transition-all" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="lastName"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className="text-sm font-semibold text-slate-700">Last Name</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Doe" className="h-11 bg-slate-50 border-slate-200 focus:bg-white focus:border-secondary focus:ring-secondary/20 rounded-lg transition-all" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-sm font-semibold text-slate-700">Email Address</FormLabel>
-                                    <FormControl>
-                                        <Input type="email" placeholder="john@example.com" className="h-11 bg-slate-50 border-slate-200 focus:bg-white focus:border-secondary focus:ring-secondary/20 rounded-lg transition-all" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name="phone"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-sm font-semibold text-slate-700">Phone Number (Optional)</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="+234 1 234 5678" className="h-11 bg-slate-50 border-slate-200 focus:bg-white focus:border-secondary focus:ring-secondary/20 rounded-lg transition-all" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name="subject"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-sm font-semibold text-slate-700">Subject</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="How can we help?" className="h-11 bg-slate-50 border-slate-200 focus:bg-white focus:border-secondary focus:ring-secondary/20 rounded-lg transition-all" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name="message"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-sm font-semibold text-slate-700">Message</FormLabel>
-                                    <FormControl>
-                                        <Textarea placeholder="Tell us more about your inquiry..." className="min-h-32 bg-slate-50 border-slate-200 focus:bg-white focus:border-secondary focus:ring-secondary/20 rounded-lg transition-all resize-none" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <Button type="submit" variant="secondary" size="lg" className="w-full">
-                            Send Message
-                        </Button>
-                    </form>
-                    </div>
-                </Form>
+                <div className="relative mt-8 p-8 md:p-12 rounded-3xl bg-gradient-to-br from-white via-slate-50 to-white border border-slate-200/50 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+                    {/* Modern gradient accent */}
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-secondary/5 to-transparent rounded-full -mr-48 -mt-48 pointer-events-none"></div>
+                    <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-primary/5 to-transparent rounded-full -ml-40 -mb-40 pointer-events-none"></div>
+                    
+                    <ContactForm />
+                </div>
             </div>
         </Section>
     );
@@ -273,7 +145,7 @@ export default function ContactPage() {
             <PageHero />
             <div className="border-b-2 border-slate-200"></div>
             <ContactDetails />
-            <ContactForm />
+            <ContactFormSection />
         </>
     )
 }
