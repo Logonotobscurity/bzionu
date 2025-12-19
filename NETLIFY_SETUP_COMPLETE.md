@@ -90,23 +90,14 @@ All 18 environment variables are ready to be added to Netlify UI:
 ## 🔐 Security Notes
 
 ### Variables Already in `.env` (Ready to Copy)
-These are already in your local `.env` file and ready to copy-paste to Netlify UI:
+These are already in your local `.env` file and ready to copy-paste to Netlify UI.
 
-```
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=Xhs5QRfukZTPuvRl9YTGqVMdtO2ddO+K9va07qA+JAs=
-AUTH_URL=http://localhost:3000
-DATABASE_URL="postgres://49354d9198a739633b94f84669bc5d7027d936ac684744f0775909b6dd90afde:sk_hthEDtY-RshT5h7emzNuV@db.prisma.io:5432/postgres?sslmode=require"
-EMAIL_SERVER_HOST="smtp.resend.com"
-EMAIL_SERVER_PORT="587"
-EMAIL_SERVER_USER="resend"
-EMAIL_SERVER_PASSWORD="re_UA3sibbL_9LMFSnTicu8GvxibJjWEwBt2"
-EMAIL_FROM="BZION <noreply@bzion.shop>"
-UPSTASH_REDIS_REST_URL="https://quality-slug-43912.upstash.io"
-UPSTASH_REDIS_REST_TOKEN="AauIAAIncDEwMzFiZWMyMWRkNjY0Njg2ODM4NDE1YTU4NTYwMjU5Y3AxNDM5MTI
-NEXT_PUBLIC_WHATSAPP_BUSINESS_PHONE=+2347010326015
-NEXT_WHATSAPP_BUSINESS_URL=https://wa.me/message/TOVLTP6EMAWNI1
-```
+**NOTE:** Never copy-paste real secrets into documentation. Instead:
+1. Get your real values from your local `.env` file
+2. Copy them directly from there to Netlify UI environment variables
+3. Never paste them into documentation files
+
+For template examples, see `.env.example` and `NETLIFY_NEXT_STEPS.md`
 
 ### Important: Change NEXTAUTH_URL for Production
 **LOCAL:** `http://localhost:3000`
@@ -154,30 +145,25 @@ Your application is production-ready:
 
 ---
 
-## 💡 Quick Copy-Paste List
+## 💡 Getting Environment Variables
 
-Have your `.env` file open and copy these values to Netlify UI:
+Have your local `.env` file open and copy these values directly to Netlify UI environment variables:
 
-| Variable | Value |
-|----------|-------|
-| NEXTAUTH_URL | https://bzionshopfmcg.netlify.app |
-| NEXTAUTH_SECRET | Xhs5QRfukZTPuvRl9YTGqVMdtO2ddO+K9va07qA+JAs= |
-| AUTH_URL | https://bzionshopfmcg.netlify.app |
-| DATABASE_URL | postgres://49354d9198a739633b94f84669bc5d7027d936ac684744f0775909b6dd90afde:sk_hthEDtY-RshT5h7emzNuV@db.prisma.io:5432/postgres?sslmode=require |
-| EMAIL_SERVER_HOST | smtp.resend.com |
-| EMAIL_SERVER_PORT | 587 |
-| EMAIL_SERVER_USER | resend |
-| EMAIL_SERVER_PASSWORD | re_UA3sibbL_9LMFSnTicu8GvxibJjWEwBt2 |
-| EMAIL_FROM | BZION <noreply@bzion.shop> |
-| UPSTASH_REDIS_REST_URL | https://quality-slug-43912.upstash.io |
-| UPSTASH_REDIS_REST_TOKEN | AauIAAIncDEwMzFiZWMyMWRkNjY0Njg2ODM4NDE1YTU4NTYwMjU5Y3AxNDM5MTI |
-| NEXT_PUBLIC_WHATSAPP_BUSINESS_PHONE | +2347010326015 |
-| NEXT_WHATSAPP_BUSINESS_URL | https://wa.me/message/TOVLTP6EMAWNI1 |
-| WHATSAPP_BUSINESS_NUMBER | +2347010326015 |
-| WHATSAPP_BUSINESS_URL | https://wa.me/message/TOVLTP6EMAWNI1 |
-| NEXT_PUBLIC_APP_VERSION | 1.0.0 |
-| NODE_ENV | production |
-| NODE_VERSION | 20 |
+**Required Variables:**
+- NEXTAUTH_URL (set to: https://bzionshopfmcg.netlify.app)
+- NEXTAUTH_SECRET (get from your .env file)
+- AUTH_URL (set to: https://bzionshopfmcg.netlify.app)
+- DATABASE_URL (get from your .env file)
+- EMAIL_SERVER_HOST, PORT, USER, PASSWORD (get from your .env file)
+- EMAIL_FROM (get from your .env file)
+- UPSTASH_REDIS_REST_URL and TOKEN (get from your .env file)
+- NEXT_PUBLIC_WHATSAPP_BUSINESS_PHONE and NEXT_WHATSAPP_BUSINESS_URL
+- Other public and build variables
+
+**⚠️ IMPORTANT:** 
+- Copy real values from your local `.env` file directly to Netlify UI
+- Never paste actual secrets into documentation files or markdown
+- Only use template/example files for reference structure
 | NPM_FLAGS | --include=dev |
 | DATA_SOURCE | static |
 

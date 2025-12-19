@@ -3,17 +3,19 @@
   functions = "netlify/functions"
   publish = ".next"
 
+# Global build environment
 [build.environment]
   NODE_VERSION = "20"
   NODE_ENV = "production"
   NPM_FLAGS = "--include=dev"
 
+# Local development server configuration
 [dev]
   command = "npm run dev"
   targetPort = 3000
   port = 8888
 
-# Cache control headers
+# Cache control headers for optimal performance
 [[headers]]
   for = "/_next/static/*"
   [headers.values]
@@ -32,12 +34,25 @@
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+# Production context - Set critical variables here as fallback
+# NOTE: All variables should be set in Netlify UI > Site Settings > Environment
+# These serve as fallback defaults only
 [context.production]
   command = "npm run build"
-  environment = { NODE_ENV = "production", NEXTAUTH_URL = "https://bzionshopfmcg.netlify.app" }
-
+  # Production environment variables
+  [context.production.environment]
+    NODE_ENV = "production"
+    # NEXTAUTH_URL MUST be set in Netlify UI for production
+    # NEXTAUTH_URL = "https://bzionshopfmcg.netlify.app"
+    
+# Deploy preview context (staging deployments)
 [context.deploy-preview]
   command = "npm run build"
+  [context.deploy-preview.environment]
+    NODE_ENV = "production"
 
+# Branch deploy context
 [context.branch-deploy]
   command = "npm run build"
+  [context.branch-deploy.environment]
+    NODE_ENV = "production"

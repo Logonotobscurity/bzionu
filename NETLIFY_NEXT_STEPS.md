@@ -20,20 +20,24 @@ Your BZION Shop application is ready for Netlify deployment! All code has been c
 
 ### Step 2: Add Environment Variables
 
-Click **"Edit variables"** and paste these variables. You already have all values in your `.env` file:
+Click **"Edit variables"** and paste these variables. Get your actual values from:
+- `NEXTAUTH_SECRET`: Your secure secret (already set locally)
+- `DATABASE_URL`: From your database provider
+- `EMAIL_SERVER_PASSWORD`: Your Resend API key
+- `UPSTASH_REDIS_REST_URL` and token: From Upstash console
 
 ```
 NEXTAUTH_URL=https://bzionshopfmcg.netlify.app
-NEXTAUTH_SECRET=Xhs5QRfukZTPuvRl9YTGqVMdtO2ddO+K9va07qA+JAs=
+NEXTAUTH_SECRET=your_secure_secret_from_local_env
 AUTH_URL=https://bzionshopfmcg.netlify.app
-DATABASE_URL=postgres://49354d9198a739633b94f84669bc5d7027d936ac684744f0775909b6dd90afde:sk_hthEDtY-RshT5h7emzNuV@db.prisma.io:5432/postgres?sslmode=require
+DATABASE_URL=your_database_url_from_provider
 EMAIL_SERVER_HOST=smtp.resend.com
 EMAIL_SERVER_PORT=587
 EMAIL_SERVER_USER=resend
-EMAIL_SERVER_PASSWORD=re_UA3sibbL_9LMFSnTicu8GvxibJjWEwBt2
+EMAIL_SERVER_PASSWORD=your_resend_api_key
 EMAIL_FROM=BZION <noreply@bzion.shop>
-UPSTASH_REDIS_REST_URL=https://quality-slug-43912.upstash.io
-UPSTASH_REDIS_REST_TOKEN=AauIAAIncDEwMzFiZWMyMWRkNjY0Njg2ODM4NDE1YTU4NTYwMjU5Y3AxNDM5MTI
+UPSTASH_REDIS_REST_URL=your_upstash_url
+UPSTASH_REDIS_REST_TOKEN=your_upstash_token
 NEXT_PUBLIC_WHATSAPP_BUSINESS_PHONE=+2347010326015
 NEXT_PUBLIC_APP_VERSION=1.0.0
 NEXT_WHATSAPP_BUSINESS_URL=https://wa.me/message/TOVLTP6EMAWNI1
@@ -86,13 +90,13 @@ Created three comprehensive guides in your repository:
 ### 🔐 Authentication (CRITICAL)
 ```
 NEXTAUTH_URL = https://bzionshopfmcg.netlify.app
-NEXTAUTH_SECRET = Xhs5QRfukZTPuvRl9YTGqVMdtO2ddO+K9va07qA+JAs=
+NEXTAUTH_SECRET = your_secure_secret_from_local_env
 AUTH_URL = https://bzionshopfmcg.netlify.app
 ```
 
 ### 🗄️ Database
 ```
-DATABASE_URL = postgres://49354d9198a739633b94f84669bc5d7027d936ac684744f0775909b6dd90afde:sk_hthEDtY-RshT5h7emzNuV@db.prisma.io:5432/postgres?sslmode=require
+DATABASE_URL = your_database_url_from_provider
 ```
 
 ### 📧 Email Service
@@ -100,14 +104,14 @@ DATABASE_URL = postgres://49354d9198a739633b94f84669bc5d7027d936ac684744f0775909
 EMAIL_SERVER_HOST = smtp.resend.com
 EMAIL_SERVER_PORT = 587
 EMAIL_SERVER_USER = resend
-EMAIL_SERVER_PASSWORD = re_UA3sibbL_9LMFSnTicu8GvxibJjWEwBt2
+EMAIL_SERVER_PASSWORD = your_resend_api_key
 EMAIL_FROM = BZION <noreply@bzion.shop>
 ```
 
 ### ⚡ Caching & Rate Limiting
 ```
-UPSTASH_REDIS_REST_URL = https://quality-slug-43912.upstash.io
-UPSTASH_REDIS_REST_TOKEN = AauIAAIncDEwMzFiZWMyMWRkNjY0Njg2ODM4NDE1YTU4NTYwMjU5Y3AxNDM5MTI
+UPSTASH_REDIS_REST_URL = your_upstash_url
+UPSTASH_REDIS_REST_TOKEN = your_upstash_token
 ```
 
 ### 📱 WhatsApp Integration

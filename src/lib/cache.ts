@@ -1,17 +1,40 @@
 import { Redis } from '@upstash/redis';
 
-const isRedisConfigured = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN;
+// Lazy-load Redis to avoid instantiation at build time
+let redis: Redis | null | undefined;
 
-const redis = isRedisConfigured ? new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-}) : null;
+function getRedis(): Redis | null {
+  if (redis !== undefined) {
+    return redis;
+  }
+
+  const isRedisConfigured = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN;
+  
+  if (!isRedisConfigured) {
+    redis = null;
+    return null;
+  }
+
+  try {
+    redis = new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL!,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+    });
+    return redis;
+  } catch (error) {
+    console.warn('[Cache] Failed to initialize Redis:', error);
+    redis = null;
+    return null;
+  }
+}
+
 
 export const cache = {
   async get<T>(key: string): Promise<T | null> {
-    if (!redis) return null;
+    const redisClient = getRedis();
+    if (!redisClient) return null;
     try {
-      return await redis.get<T>(key);
+      return await redisClient.get<T>(key);
     } catch (error) {
       console.error('Cache get error:', error);
       return null;
@@ -19,12 +42,13 @@ export const cache = {
   },
 
   async set<T>(key: string, value: T, ttl?: number): Promise<void> {
-    if (!redis) return;
+    const redisClient = getRedis();
+    if (!redisClient) return;
     try {
       if (ttl) {
-        await redis.setex(key, ttl, JSON.stringify(value));
+        await redisClient.setex(key, ttl, JSON.stringify(value));
       } else {
-        await redis.set(key, JSON.stringify(value));
+        await redisClient.set(key, JSON.stringify(value));
       }
     } catch (error) {
       console.error('Cache set error:', error);
@@ -32,20 +56,22 @@ export const cache = {
   },
 
   async del(key: string): Promise<void> {
-    if (!redis) return;
+    const redisClient = getRedis();
+    if (!redisClient) return;
     try {
-      await redis.del(key);
+      await redisClient.del(key);
     } catch (error) {
       console.error('Cache del error:', error);
     }
   },
 
   async invalidatePattern(pattern: string): Promise<void> {
-    if (!redis) return;
+    const redisClient = getRedis();
+    if (!redisClient) return;
     try {
-      const keys = await redis.keys(pattern);
+      const keys = await redisClient.keys(pattern);
       if (keys.length > 0) {
-        await redis.del(...keys);
+        await redisClient.del(...keys);
       }
     } catch (error) {
       console.error('Cache invalidate error:', error);

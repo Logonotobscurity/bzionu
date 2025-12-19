@@ -33,14 +33,14 @@ DATABASE_URL = postgres://49354d9198a739633b94f84669bc5d7027d936ac684744f0775909
 EMAIL_SERVER_HOST = smtp.resend.com
 EMAIL_SERVER_PORT = 587
 EMAIL_SERVER_USER = resend
-EMAIL_SERVER_PASSWORD = re_UA3sibbL_9LMFSnTicu8GvxibJjWEwBt2
+EMAIL_SERVER_PASSWORD = your_resend_api_key_from_dashboard
 EMAIL_FROM = BZION <noreply@bzion.shop>
 ```
 
 #### 4. Caching & Rate Limiting (Upstash Redis)
 ```
-UPSTASH_REDIS_REST_URL = https://quality-slug-43912.upstash.io
-UPSTASH_REDIS_REST_TOKEN = AauIAAIncDEwMzFiZWMyMWRkNjY0Njg2ODM4NDE1YTU4NTYwMjU5Y3AxNDM5MTI
+UPSTASH_REDIS_REST_URL = https://your-upstash-instance.upstash.io
+UPSTASH_REDIS_REST_TOKEN = your_upstash_token_from_console
 ```
 
 ### Public Variables (Safe to Commit)
