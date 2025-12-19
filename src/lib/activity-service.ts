@@ -8,7 +8,8 @@ export type ActivityType =
   | 'profile_update' 
   | 'password_reset'
   | 'email_verified'
-  | 'account_created';
+  | 'account_created'
+  | 'email_sent';
 
 export interface ActivityData {
   [key: string]: any;

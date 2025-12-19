@@ -212,20 +212,14 @@ export async function POST(req: Request): Promise<NextResponse<SendEmailResponse
 
     // 10. Log activity for audit trail
     try {
-      if ('logActivity' in require('@/lib/activity-service')) {
-        await logActivity({
-          userId: session.user.id || '',
-          action: 'EMAIL_SENT',
-          resource: 'email',
-          details: {
-            recipient: normalizedEmail,
-            subject: sanitizedSubject,
-            messageId,
-            success: true,
-          },
-          ipAddress: req.headers.get('x-forwarded-for') || 'unknown',
-        });
-      }
+      const userId = session.user.id ? parseInt(session.user.id, 10) : 0;
+      await logActivity(userId, 'email_sent', {
+        recipient: normalizedEmail,
+        subject: sanitizedSubject,
+        messageId,
+        success: true,
+        ipAddress: req.headers.get('x-forwarded-for') || 'unknown',
+      });
     } catch (logError) {
       console.warn('[EMAIL_SEND] Failed to log activity:', logError);
       // Don't fail the request if logging fails
