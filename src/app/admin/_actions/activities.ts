@@ -22,13 +22,23 @@ export interface ActivityEvent {
 
 /**
  * Wrapper function to add timeout protection to async database queries
+ * Increased timeout to 20 seconds to handle slow connections
  * Prevents hanging requests and ensures faster page loads
  */
-async function withTimeout<T>(promise: Promise<T>, timeoutMs: number = 5000): Promise<T> {
-  const timeoutPromise = new Promise<T>((_, reject) =>
-    setTimeout(() => reject(new Error(`Query timeout after ${timeoutMs}ms`)), timeoutMs)
-  );
-  return Promise.race([promise, timeoutPromise]);
+async function withTimeout<T>(
+  promise: Promise<T>,
+  timeoutMs: number = 20000,
+  label: string = 'Query'
+): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => {
+        console.warn(`[TIMEOUT] ${label} exceeded ${timeoutMs}ms, returning empty data`);
+        reject(new Error(`${label} timeout after ${timeoutMs}ms`));
+      }, timeoutMs)
+    ),
+  ]);
 }
 
 export async function getRecentActivities(limit: number = 20): Promise<ActivityEvent[]> {
@@ -47,7 +57,8 @@ export async function getRecentActivities(limit: number = 20): Promise<ActivityE
           emailVerified: true,
         },
       }),
-      4000
+      20000,
+      'Fetch recent users'
     );
 
     // Get recent quote requests
@@ -73,7 +84,8 @@ export async function getRecentActivities(limit: number = 20): Promise<ActivityE
           },
         },
       }),
-      4000
+      20000,
+      'Fetch recent quotes'
     );
 
     // Get recent form submissions
@@ -89,7 +101,8 @@ export async function getRecentActivities(limit: number = 20): Promise<ActivityE
           status: true,
         },
       }),
-      4000
+      20000,
+      'Fetch recent form submissions'
     );
 
     // Get recent newsletter signups
@@ -104,7 +117,8 @@ export async function getRecentActivities(limit: number = 20): Promise<ActivityE
           status: true,
         },
       }),
-      4000
+      20000,
+      'Fetch recent newsletter signups'
     );
 
     // Get recent checkout events (from analytics)
@@ -128,7 +142,8 @@ export async function getRecentActivities(limit: number = 20): Promise<ActivityE
           },
         },
       }),
-      4000
+      20000,
+      'Fetch recent checkout events'
     );
 
     // Convert all to unified activity format
@@ -266,7 +281,8 @@ export async function getActivityStats() {
           where: { eventType: 'checkout_completed' },
         }),
       ]),
-      4000
+      20000,
+      'Fetch activity stats'
     );
 
     return {
@@ -319,7 +335,8 @@ export async function getQuotes(status?: string, limit: number = 50) {
           },
         },
       }),
-      4000
+      20000,
+      'Fetch quotes'
     );
     return quotes;
   } catch (error) {
@@ -350,7 +367,8 @@ export async function getNewUsers(limit: number = 50) {
           isNewUser: true,
         },
       }),
-      4000
+      20000,
+      'Fetch new users'
     );
     return users;
   } catch (error) {
@@ -373,7 +391,8 @@ export async function getNewsletterSubscribers(limit: number = 50) {
           unsubscribedAt: true,
         },
       }),
-      4000
+      20000,
+      'Fetch newsletter subscribers'
     );
     return subscribers;
   } catch (error) {
@@ -397,7 +416,8 @@ export async function getFormSubmissions(limit: number = 50) {
           ipAddress: true,
         },
       }),
-      4000
+      20000,
+      'Fetch form submissions'
     );
     return submissions;
   } catch (error) {
@@ -413,7 +433,8 @@ export async function updateFormSubmissionStatus(id: string, status: string) {
         where: { id },
         data: { status },
       }),
-      4000
+      20000,
+      'Update form submission status'
     );
     return updated;
   } catch (error) {

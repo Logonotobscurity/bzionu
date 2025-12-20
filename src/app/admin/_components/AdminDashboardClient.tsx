@@ -55,12 +55,31 @@ export default function AdminDashboardClient({
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [autoRefresh, setAutoRefresh] = useState(false);
+  
+  // Pagination state for each section
+  const [activitiesPage, setActivitiesPage] = useState(0);
+  const [quotesPage, setQuotesPage] = useState(0);
+  const [usersPage, setUsersPage] = useState(0);
+  const [newsletterPage, setNewsletterPage] = useState(0);
+  const [formsPage, setFormsPage] = useState(0);
 
   // Refresh data from server
-  const refreshData = useCallback(async () => {
+  const refreshData = useCallback(async (page: number = 0) => {
     try {
       setIsRefreshing(true);
-      const response = await fetch('/api/admin/dashboard-data');
+      const limit = 20;
+      const response = await fetch(`/api/admin/dashboard-data?page=${page}&limit=${limit}`, {
+        headers: {
+          'If-None-Match': lastUpdated.getTime().toString(),
+        },
+      });
+      
+      if (response.status === 304) {
+        console.log('[DASHBOARD] Using cached data (304 Not Modified)');
+        setLastUpdated(new Date());
+        return;
+      }
+      
       if (response.ok) {
         const data = await response.json();
         setStats(data.stats);
@@ -70,13 +89,14 @@ export default function AdminDashboardClient({
         setNewsletterSubscribers(data.newsletterSubscribers);
         setFormSubmissions(data.formSubmissions);
         setLastUpdated(new Date());
+        console.log(`[DASHBOARD] Data loaded in ${data.responseTime}`);
       }
     } catch (error) {
       console.error('Failed to refresh dashboard data:', error);
     } finally {
       setIsRefreshing(false);
     }
-  }, []);
+  }, [lastUpdated]);
 
   // Auto-refresh effect
   useEffect(() => {
@@ -131,7 +151,7 @@ export default function AdminDashboardClient({
               {autoRefresh ? 'Auto-refreshing' : 'Auto-refresh off'}
             </Button>
             <Button
-              onClick={refreshData}
+              onClick={() => refreshData()}
               disabled={isRefreshing}
               variant="outline"
               size="sm"

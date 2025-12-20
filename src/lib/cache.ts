@@ -94,6 +94,15 @@ export const CACHE_KEYS = {
   categories: 'categories:all',
   companies: 'companies:all',
   user: (id: string) => `user:${id}`,
+  // Dashboard cache keys
+  dashboard: {
+    activities: (offset: number = 0, limit: number = 20) => `dashboard:activities:${offset}:${limit}`,
+    stats: 'dashboard:stats',
+    quotes: (offset: number = 0, limit: number = 20) => `dashboard:quotes:${offset}:${limit}`,
+    users: (offset: number = 0, limit: number = 20) => `dashboard:users:${offset}:${limit}`,
+    newsletter: (offset: number = 0, limit: number = 20) => `dashboard:newsletter:${offset}:${limit}`,
+    forms: (offset: number = 0, limit: number = 20) => `dashboard:forms:${offset}:${limit}`,
+  },
 };
 
 export const CACHE_TTL = {
@@ -101,4 +110,52 @@ export const CACHE_TTL = {
   medium: 300, // 5 minutes
   long: 3600, // 1 hour
   day: 86400, // 24 hours
+  // Dashboard-specific TTLs
+  dashboard: {
+    realtime: 10, // 10 seconds - real-time data
+    stats: 30, // 30 seconds - less critical
+  },
 };
+
+/**
+ * Get or fetch query with automatic caching
+ * Falls back to in-memory cache if Redis unavailable
+ * @param key - Cache key
+ * @param fetcher - Async function to fetch data
+ * @param ttl - Time to live in seconds
+ */
+export async function getCachedQuery<T>(
+  key: string,
+  fetcher: () => Promise<T>,
+  ttl: number = CACHE_TTL.dashboard.realtime
+): Promise<T> {
+  // Try Redis first
+  const cached = await cache.get<T>(key);
+  if (cached) {
+    console.log(`[CACHE_HIT] ${key}`);
+    return cached;
+  }
+
+  // Fetch fresh data
+  console.log(`[CACHE_MISS] ${key}`);
+  const data = await fetcher();
+
+  // Cache the result
+  await cache.set(key, data, ttl);
+  return data;
+}
+
+/**
+ * Invalidate dashboard cache entries
+ * @param pattern - Optional pattern (e.g., 'dashboard:activities')
+ */
+export async function invalidateDashboardCache(pattern?: string): Promise<void> {
+  if (!pattern) {
+    // Clear all dashboard cache
+    console.log('[CACHE] Invalidating all dashboard cache');
+    await cache.invalidatePattern('dashboard:*');
+  } else {
+    console.log(`[CACHE] Invalidating dashboard cache: ${pattern}`);
+    await cache.invalidatePattern(pattern);
+  }
+}
